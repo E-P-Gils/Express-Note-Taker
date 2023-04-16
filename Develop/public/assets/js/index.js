@@ -1,3 +1,12 @@
+const express = require("express");
+const path = require("path");
+const app = express();
+const PORT = process.env.PORT || 3001; 
+
+app.get('/notes', function(req,res){
+  res.sendFile(path.join(__dirname, 'public', 'notes.html'));
+});
+
 let noteTitle;
 let noteText;
 let saveNoteBtn;
@@ -181,3 +190,7 @@ if (window.location.pathname === '/notes') {
 }
 
 getAndRenderNotes();
+
+app.listen(PORT, ()=>{
+  console.log("Server running.");
+})
