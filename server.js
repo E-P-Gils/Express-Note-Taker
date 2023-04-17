@@ -2,18 +2,19 @@ const fs = require("fs");
 const express = require("express");
 const path = require("path");
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 3001;
 
 app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, '/Develop/public/index.html'));
 });
 
 app.get('/notes', function (req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'notes.html'));
+    res.sendFile(path.join(__dirname, '/Develop/public/notes.html'));
 });
 
-app.get('api/notes',(req,res)=>{ 
-    res.readFile('db.json', 'utf8', (err, data)=>{
+app.get('/api/notes',(req,res)=>{ 
+    fs.readFile('db.json', 'utf8', (err, data)=>{
         if(err){
             console.log(err);
             return res.status(500).send("error reading notes.");
@@ -23,7 +24,7 @@ app.get('api/notes',(req,res)=>{
         });
 });
 
-app.post('api/notes', (req,res)=>{
+app.post('/api/notes', (req,res)=>{
     fs.readFile('db.json', 'utf8', (err,data)=>{
         if(err){
             console.log(err);
